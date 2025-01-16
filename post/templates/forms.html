@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Form{% endblock %}
+
+{% block hero %}{% endblock  %}
+
+{% block body %}
+
+<h1><strong><em>Post Form</em></strong></h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+{% if user.is_authenticated %}
+    {{form.as_p}}
+    
+    <input type="submit" value="Submit" class="btn btn-primary mx-2">
+    {% else %}
+        <p>Login required!</p>
+    {% endif %}
+</form>
+
+{% endblock %}

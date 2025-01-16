@@ -1,0 +1,123 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url "home" %}">Posting</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "home" %}">Home</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "create-post" %}">Add Post</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "list-post" %}">Posts</a>
+          </li>
+        </ul>
+        
+          <!-- Button trigger modal -->
+
+          {% if user.is_authenticated %}
+          <!--Logout-->
+          <a href="{% url 'logout-user' %}" class="btn btn-primary">
+            Logout
+          </a>
+          {% else %}
+          <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Signup
+          </button>
+          
+          <!--Button trigger login modal-->
+          <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+            Login
+          </button>
+          {% endif %}
+        
+      </div>
+    </div>
+  </nav>
+  
+  <!--Login Modal-->
+  
+  
+  
+  <!-- SignUp Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.7);">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">SignUp Form</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-container">
+              <form action="{% url 'signup-user' %}" method="POST">
+                
+                  <div class="form-group">
+                      <label for="first-name">First Name:</label><br>
+                      <input type="text" class="form-control" id="first-name" name="fname" placeholder="Enter your first name" required>
+                  </div><br>
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="last-name">Last Name:</label><br>
+                      <input type="text" class="form-control" id="last-name" name="lname" placeholder="Enter your last name" required>
+                  </div><br>
+                  <div class="form-group">
+                      <label for="username">Username:</label><br>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+                  </div><br>
+                  <div class="form-group">
+                      <label for="email">Email:</label><br>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                  </div><br>
+                  <div class="form-group">
+                      <label for="password">Password:</label><br>
+                      <input type="password" class="form-control" id="password1" name="password1" placeholder="Create a password" required>
+                  </div><br>
+                  <div class="form-group">
+                    <label for="password">Password:</label><br>
+                    <input type="password" class="form-control" id="password2" name="password2" placeholder="Enter your password again" required>
+                </div><br>
+                  <button type="submit" class="btn btn-primary">SignUp</button>
+              </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <!--Login Modal-->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.7);">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Login Form</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+              <form action="{% url 'login-user' %}" method="POST">
+                {% csrf_token %}
+                  <div class="form-group">
+                      <label for="username">Username:</label><br>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+                  </div><br>
+                  <div class="form-group">
+                      <label for="password">Password:</label><br>
+                      <input type="password" id="password" class="form-control" name="password" placeholder="Create a password" required>
+                  </div><br>
+                  
+                  <button type="submit" class="btn btn-primary">Login</button>
+              </form>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
