@@ -13,7 +13,7 @@
 {% if user.is_authenticated %}
     {{form.as_p}}
     
-    <input type="submit" value="Submit" class="btn btn-primary mx-2">
+    <input type="submit" value="Submit" class="btn btn-outline-primary mx-2">
     {% else %}
         <p>Login required!</p>
     {% endif %}

@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 
-{% block title %}Posts{% endblock %}
+{% block title %}Searched Posts{% endblock %}
 
 {% block hero %}
 {% endblock %}
 
 {% block body %}
+<h2 class="text-center mt-5">Searched Posts</h2>
 <div class="pt-5">
+  <!-- Table for displaying posts -->
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -33,11 +35,16 @@
           <td>{{ post.created_at }}</td>
           <td>{{ post.updated_at }}</td>
         </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" class="text-center">No posts found</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
 
+<!-- Pagination -->
 <div class="d-flex justify-content-center">
 <ul class="pagination">
   {% if page_obj.has_previous %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
+from django.db.models import Q
 from comment.models import Comment
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -52,7 +53,6 @@ def update_post(request, id):
 def delete_post(request, id):
     
     post = get_object_or_404(Post, id = id, user = request.user)
-    print(post)
     if request.method == "POST" and request.user.is_authenticated:
         post.delete()
         messages.success(request, f"{post.title} is deleted successfully!")
@@ -84,7 +84,7 @@ def fetch_posts():
         messages.error(requests, f"Error while fetching post: {e}.")
 
 
-
+@login_required
 def list_post(request):
 
     fetch_posts()
@@ -96,3 +96,33 @@ def list_post(request):
 
     return render(request, "list_post.html", {'posts': posts, 'page_obj': page_obj})
 
+
+@login_required
+def search(request):
+    if request.method == "GET":
+        query = request.GET.get('search', '')
+        posts = Post.objects.all()
+        
+        if query:
+            posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query)) 
+        else:
+            messages.info(request, "Please enter a search term.")
+            return render(request, "search.html", {'query': query, 'page_obj': None})
+        page_num = request.GET.get("page", 1)
+        paginator = Paginator(posts, 5)
+        page_obj = paginator.get_page(page_num)
+
+        return render(request, "search.html", {'query': query, 'page_obj': page_obj})
+
+
+@login_required
+def my_post(request):
+    if request.method == "GET":
+        user = request.user
+        posts = Post.objects.filter(user=user)
+        
+        if not posts:
+            messages.warning(request, f"{user.username}! Don't have any post yet.")
+        else:
+            return render(request, "my_post.html", {'posts': posts})    
+    return redirect("home")    

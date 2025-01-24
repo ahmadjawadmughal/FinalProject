@@ -54,11 +54,11 @@
                 <form method="post" action="{% url 'comment-creation' %}">
                     {% csrf_token %}
                     {{ comment_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    <button type="submit" class="btn btn-outline-primary">Submit Comment</button>
                 </form>
                 {% else %}
                 <p class="alert alert-danger">You must be logged in to add a comment.</p>
-                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary">Login</a>
                 {% endif %}
             </div>
         </div>
