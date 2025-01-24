@@ -13,20 +13,28 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "create-post" %}">Add Post</a>
           </li>
-          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url "my-post" %}">My Posts</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url "list-post" %}">Posts</a>
           </li>
+          {% endif %}
         </ul>
         
           <!-- Button trigger modal -->
 
           {% if user.is_authenticated %}
           <!--Logout-->
-          <a href="{% url 'logout-user' %}" class="btn btn-primary">
+          <form class="d-flex" method="get" action="{% url 'search-post' %}">
+            <input class="form-control me-2" type="search" name= "search" placeholder="Search" aria-label="Search" value={{query}}>
+            <button class="btn btn-outline-success mx-2" type="submit">Search</button>
+          </form>
+          <a href="{% url 'logout-user' %}" class="btn btn-outline-primary">
             Logout
           </a>
           {% else %}
+          {% comment "" %}
           <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Signup
           </button>
@@ -35,8 +43,8 @@
           <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">
             Login
           </button>
+          {% endcomment %}
           {% endif %}
-        
       </div>
     </div>
   </nav>
@@ -44,7 +52,7 @@
   <!--Login Modal-->
   
   
-  
+  {% comment "" %}
   <!-- SignUp Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -121,3 +129,4 @@
       </div>
     </div>
   </div>
+  {% endcomment %}
